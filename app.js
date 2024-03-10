@@ -1,30 +1,50 @@
-let corVermelho = document.getElementById('btnVermelho');
-let corAmarelo = document.getElementById('btnAmarelo');
-let corVerde = document.getElementById('btnVerde');
-let corAuto = document.getElementById('btnAuto');
-let corSemaforo = document.getElementById('semaforo');
+const img = document.getElementById('imagem');
+const buttons = document.getElementById('buttons');
+let colorIndex = 0;
+let intervalId = null;
 
 
 
-function fechado(){
-    corSemaforo.src = "img/vermelho.png";
-}
-
-function atencao(){
-    corSemaforo.src = "img/amarelo.png";
-}
-
-function siga(){
-    corSemaforo.src = "img/verde.png"
-}
-
-function auto(){
+//criando um arrow
+const trafficLight = (event) => {
+    stopAutomatic();
+//pegando o evento, onde clicou e seu id,  que está sendo disparado dendo do objeto pai
+    turnOn[event.target.id]();
     
 }
 
-corVermelho.addEventListener("click", fechado);
-corAmarelo.addEventListener("click", atencao);
-corVerde.addEventListener("click", siga);
-corAuto.addEventListener("click", auto);
+//botão automatico próximo index depois zera.
+const nextIndex = () => {
+    if (colorIndex < 2){
+    colorIndex++ } else {
+        colorIndex = 0;
+    }
+}
+
+const changeColor = () => {
+    const colors = ['red', 'yellow', 'green'];
+    const color = colors[colorIndex];
+    turnOn[color]();
+    nextIndex();
+
+}
+
+const stopAutomatic = () => {
+    clearInterval(intervalId)
+}
 
 
+//criando um objeto para ficar mais simples de chamar as funções.
+const turnOn = {
+    'red': () => img.src = 'img/vermelho.png',
+    'yellow' : () => img.src = 'img/amarelo.png',
+    'green' : () => img.src = 'img/verde.png',
+
+    //intervalo do evento a cada x milissegundos
+    'automatic' : () => intervalId = setInterval( changeColor, 1000)
+
+}
+
+
+//criando uma lista de evento para o clique do botão
+buttons.addEventListener('click', trafficLight);

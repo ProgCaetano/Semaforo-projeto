@@ -4,6 +4,11 @@
 }
 
 main{
-    text-align: center;
-    padding-top: 60px;
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5vh;
+
 }
